@@ -15,8 +15,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  getUser(@Param() params: { id: string }) {
-    return { getUser: params.id };
+  getUser(@Param('id') id: string) {
+    return { getUser: id };
   }
 
   @Post()
