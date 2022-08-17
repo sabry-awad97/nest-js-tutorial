@@ -11,27 +11,41 @@ import {
 } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { CreateUserDTO } from './DTO/create-users.dto';
+import { UsersService } from './users.service';
 
 // The Controllers are used as the routing layer.
 @Controller('users')
 export class UsersController {
+  constructor(private usersService: UsersService) {}
   @Get()
-  getAllUsers(
+  async getAllUsers(
     @Req() req: Request,
     @Res() res: Response,
     @Next() next: NextFunction
   ) {
-    const users = [{ Name: 'Sabry', Age: 25 }];
-    res.status(HttpStatus.OK).json(users);
+    try {
+      const users = await this.usersService.getAllUsers();
+      res.status(HttpStatus.OK).json(users);
+    } catch (error) {
+      console.error(error);
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get(':id')
-  getUser(@Param('id') id: string) {
-    return { getUser: id };
+  async getUser(@Res() res: Response, @Param('id') id: string) {
+    try {
+      const user = await this.usersService.getUser(+id);
+      res.status(HttpStatus.OK).json(user);
+    } catch (error) {
+      console.error(error);
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Post()
-  addUser(@Body() body: CreateUserDTO) {
-    console.log(body.name, body.age);
+  async addUser(@Res() res: Response, @Body() body: CreateUserDTO) {
+    const users = await this.usersService.addUser(body);
+    res.status(HttpStatus.OK).json(users);
   }
 }
