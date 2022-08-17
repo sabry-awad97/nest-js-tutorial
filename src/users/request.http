@@ -1,0 +1,8 @@
+###
+http://localhost:3000
+
+### Get a list of all the available users
+Get http://localhost:3000/users
+
+### Get a user from the list of available users
+Get http://localhost:3000/users/2
