@@ -1,5 +1,16 @@
-import { Controller, Get, Next, Param, Post, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Next,
+  Param,
+  Post,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
+import { CreateUserDTO } from './DTO/create-users.dto';
 
 // The Controllers are used as the routing layer.
 @Controller('users')
@@ -11,7 +22,7 @@ export class UsersController {
     @Next() next: NextFunction
   ) {
     const users = [{ Name: 'Sabry', Age: 25 }];
-    res.status(200).json(users);
+    res.status(HttpStatus.OK).json(users);
   }
 
   @Get(':id')
@@ -20,5 +31,7 @@ export class UsersController {
   }
 
   @Post()
-  addUser() {}
+  addUser(@Body() body: CreateUserDTO) {
+    console.log(body.name, body.age);
+  }
 }

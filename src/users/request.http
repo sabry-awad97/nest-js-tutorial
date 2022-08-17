@@ -6,3 +6,12 @@ Get http://localhost:3000/users
 
 ### Get a user from the list of available users
 Get http://localhost:3000/users/2
+
+### create a new user
+Post http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name": "Sabry",
+    "age": 25
+}
