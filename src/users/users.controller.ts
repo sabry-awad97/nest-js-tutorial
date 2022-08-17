@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 // The Controllers are used as the routing layer.
 @Controller('users')
 export class UsersController {
-  @Get('')
+  @Get()
   getAllUsers(
     @Req() req: Request,
     @Res() res: Response,
@@ -15,10 +15,10 @@ export class UsersController {
   }
 
   @Get(':id')
-  getUser(@Param() params) {
+  getUser(@Param() params: { id: string }) {
     return { getUser: params.id };
   }
 
-  @Post('')
+  @Post()
   addUser() {}
 }
